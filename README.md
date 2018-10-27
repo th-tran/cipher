@@ -1,3 +1,10 @@
+## Compilation
+To run the program:
+
+1) javac -cp ".;lib/*" Cipher.java
+
+2) java -cp ".;lib/*" Cipher
+
 ## Current features:
 - New project ;)
 
