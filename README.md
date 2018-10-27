@@ -3,9 +3,9 @@
 
 ## Planned features:
 - Encryption algorithms:
-  - Caesar
-  - RSA
-  - AES
+  - Caesar (https://simple.wikipedia.org/wiki/Caesar_cipher)
+  - RSA (https://simple.wikipedia.org/wiki/RSA_algorithm)
+  - AES (https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
 - Optional modes:
   - Strong encryption
   - Generate keys only
