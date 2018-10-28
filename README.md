@@ -6,8 +6,8 @@ To build the project, there are two options:
 1) Automatic: Run the build script by typing './build.sh'.
 
 2) Manual: Run the following commands:
-    1) javac -cp lib/* -d bin src/\*.java
-    2) cd bin
+    1) javac -cp lib/* -d classes src/\*.java
+    2) cd classes
     3) jar cvfe Cipher.jar Cipher \*.class algorithm/\*.class ../lib/\*.jar
 
 ## Running the program
@@ -16,11 +16,11 @@ There are two options:
 
 (Assuming you're in the project root directory)
 
-1) java bin/Cipher
+1) Class file: 
+    1) cd classes
+    2) java -cp ".;../lib/\*" Cipher
 
-2) java -jar bin/Cipher.jar
-
-Note that jar files are portable, so you can move it anywhere you want and run it!
+2) Jar: java -jar jar/Cipher.jar
 
 ## Current features:
 - New project ;)
