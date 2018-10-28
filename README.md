@@ -6,9 +6,9 @@ To build the project, there are two options:
 1) Automatic: Run the build script by typing './build.sh'.
 
 2) Manual: Run the following commands:
-  1) javac -cp lib/* -d bin src/\*.java
-  2) cd bin
-  3) jar cvfe Cipher.jar Cipher \*.class algorithm/\*.class ../lib/\*.jar
+    1) javac -cp lib/* -d bin src/\*.java
+    2) cd bin
+    3) jar cvfe Cipher.jar Cipher \*.class algorithm/\*.class ../lib/\*.jar
 
 ## Running the program
 
