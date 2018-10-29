@@ -9,9 +9,9 @@ public class Shift {
   }
   
   private Character determineShiftBoundary(char context, char c) {
-    if (('a' <= c) && (c <= 'z')) {
+    if (Character.isLowerCase(c)) {
       return (Character.toLowerCase(context) == 'd') ? 'a' : 'z';
-    } else if (('A' <= c) && (c <= 'Z')) {
+    } else if (Character.isUpperCase(c)) {
       return (Character.toLowerCase(context) == 'd') ? 'A' : 'Z';
     } else {
       return null;
@@ -19,40 +19,44 @@ public class Shift {
   }
 
   public String encrypt(String msg) {
-    String encrypted = "";
+    StringBuilder strBuilder = new StringBuilder();
     int len = msg.length();
     for(int x = 0; x < len; x++){
       char c = (char)(msg.charAt(x) + s);
       Character start = determineShiftBoundary('E', c);
       if (start == null) {
-        encrypted += c;
+        strBuilder.append(c);
         continue;
       }
+      char encryptedChar;
       if (c > start){
-        encrypted += (char)(msg.charAt(x) - (26-s));
+        encryptedChar = (char)(msg.charAt(x) - (26-s));
       } else {
-        encrypted += (char)(msg.charAt(x) + s);
+        encryptedChar = (char)(msg.charAt(x) + s);
       }
+      strBuilder.append(encryptedChar);
     }
-    return encrypted;
+    return strBuilder.toString();
   }
 
   public String decrypt(String msg) {
-    String decrypted = "";
+    StringBuilder strBuilder = new StringBuilder();
     int len = msg.length();
     for(int x = 0; x < len; x++){
       char c = (char)(msg.charAt(x) - s);
       Character start = determineShiftBoundary('D', c);
       if (start == null) {
-        decrypted += c;
+        strBuilder.append(c);
         continue;
       }
+      char decryptedChar;
       if (c < start) {
-        decrypted += (char)(msg.charAt(x) + (26-s));
+        decryptedChar = (char)(msg.charAt(x) + (26-s));
       } else {
-        decrypted += (char)(msg.charAt(x) - s);
+        decryptedChar = (char)(msg.charAt(x) - s);
       }
+      strBuilder.append(decryptedChar);
     }
-    return decrypted;
+    return strBuilder.toString();
   }
 }
