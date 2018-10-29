@@ -11,10 +11,7 @@ public class Main {
   
   public static void main(String[] argv) throws Exception {
     Settings settings = new Settings();
-    for (String arg : argv){
-      System.out.println(arg);
-    }
-    // All invalid/edge cases are caught during parsing
+    // Most invalid/edge cases will be caught during parsing
     new JCommander(settings, argv);
     new Main().run(settings);
   }
@@ -22,7 +19,7 @@ public class Main {
   public void run(Settings settings) throws Exception { 
     //System.out.println(settings.algo);
     //System.out.println(settings.shift);
-    String input;
+    String msg;
     switch (settings.algo) {
       case RSA:
         // TODO
@@ -32,11 +29,13 @@ public class Main {
           throw new IllegalStateException("Cannot start encryption: missing shift value (provide with -s flag)");
         }
         System.out.println("Enter the plain text:");
-        input = IOUtilities.getUserInput();
-        System.out.println("Original message: " + input);
-        Shift cipher = new Shift();
-        String encrypted = cipher.encrypt(input, settings.shift);
-        System.out.println("Encrypted message: " + encrypted);
+        msg = IOUtilities.getUserInput();
+        System.out.println("Original message: " + msg);
+        Shift cipher = new Shift(settings.shift);
+        msg = cipher.encrypt(msg);
+        System.out.println("Encrypted message: " + msg);
+        msg = cipher.decrypt(msg);
+        System.out.println("Decrypted message: " + msg);
         break;
       default:
         // Should be handled by parser, but throw exception here anyways

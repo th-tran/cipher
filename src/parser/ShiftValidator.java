@@ -9,8 +9,8 @@ public class ShiftValidator implements IParameterValidator {
   public void validate(String name, String value) throws ParameterException {
     int shift = Integer.parseInt(value);
 
-    if (shift < 1 || shift > 26) {
-      throw new ParameterException("Parameter " + name + " should be between 1 and 26");
+    if (shift < 1 || shift > 25) {
+      throw new ParameterException("Parameter " + name + " should be between 1 and 25");
     }
   }
 }
