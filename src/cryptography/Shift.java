@@ -8,15 +8,23 @@ public class Shift {
     s = shift;
   }
   
+  private Character determineShiftBoundary(char context, char c) {
+    if (('a' <= c) && (c <= 'z')) {
+      return (Character.toLowerCase(context) == 'd') ? 'a' : 'z';
+    } else if (('A' <= c) && (c <= 'Z')) {
+      return (Character.toLowerCase(context) == 'd') ? 'A' : 'Z';
+    } else {
+      return null;
+    }
+  }
+
   public String encrypt(String msg) {
     String encrypted = "";
     int len = msg.length();
     for(int x = 0; x < len; x++){
       char c = (char)(msg.charAt(x) + s);
-      char start = 'Z';
-      if (('a' <= c) && (c <= 'z')) {
-        start = 'z';
-      } else if (!(('A' <= c) && (c <= 'Z'))) {
+      Character start = determineShiftBoundary('E', c);
+      if (start == null) {
         encrypted += c;
         continue;
       }
@@ -34,10 +42,8 @@ public class Shift {
     int len = msg.length();
     for(int x = 0; x < len; x++){
       char c = (char)(msg.charAt(x) - s);
-      char start = 'A';
-      if (('a' <= c) && (c <= 'z')) {
-        start = 'a';
-      } else if (!(('A' <= c) && (c <= 'Z'))) {
+      Character start = determineShiftBoundary('D', c);
+      if (start == null) {
         decrypted += c;
         continue;
       }
