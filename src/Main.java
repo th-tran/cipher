@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import cryptography.*;
 import parser.*;
 import util.*;
@@ -26,16 +23,34 @@ public class Main {
         break;
       case SHIFT:
         if (settings.shift == 0) {
-          throw new IllegalStateException("Cannot start encryption: missing shift value (provide with -s flag)");
+          throw new IllegalStateException("Cannot start: missing shift value (provide with -s flag)");
         }
-        System.out.println("Enter the plain text:");
-        msg = IOUtilities.getUserInput();
-        System.out.println("Original message: " + msg);
         Shift cipher = new Shift(settings.shift);
-        msg = cipher.encrypt(msg);
-        System.out.println("Encrypted message: " + msg);
-        msg = cipher.decrypt(msg);
-        System.out.println("Decrypted message: " + msg);
+        if (settings.decrypt) {
+          if (settings.inputFile != null && !settings.inputFile.isEmpty()) {
+            msg = IOUtilities.readFromFile(settings.inputFile, true);
+            msg = cipher.decrypt(msg);
+            System.out.println("Decrypted message: " + msg);
+            if (settings.outputFile != null && !settings.outputFile.isEmpty()){
+              IOUtilities.writeToFile(settings.outputFile, msg, true);
+            }
+          } else {
+            throw new IllegalStateException("Cannot start decryption: missing text file containing message (provide with -f flag)");
+          }
+        } else {
+          if (settings.inputFile != null && !settings.inputFile.isEmpty()) {
+            msg = IOUtilities.readFromFile(settings.inputFile, true);
+          } else {
+            System.out.println("Enter the plain text:");
+            msg = IOUtilities.getUserInput();
+          }
+          System.out.println("Original message: " + msg);
+          msg = cipher.encrypt(msg);
+          System.out.println("Encrypted message: " + msg);
+          if (settings.outputFile != null && !settings.outputFile.isEmpty()){
+            IOUtilities.writeToFile(settings.outputFile, msg, true);
+          }
+        }
         break;
       default:
         // Should be handled by parser, but throw exception here anyways
