@@ -18,9 +18,19 @@ public class Main {
     //System.out.println(settings.algo);
     //System.out.println(settings.shift);
     String msg;
+    String launchInfo;
     switch (settings.algo) {
       case RSA:
-        // TODO
+        launchInfo = String.format("--- Starting %s ('RSA' algorithm) ---", (settings.decrypt) ? "decryption" : "encryption");
+        System.out.println(launchInfo);
+        RSA rsaCipher = new RSA();
+        // XXX Testing (only works with numbers right now)
+        double test = 12;
+        System.out.println(String.format("Original message: %f", test));
+        test = rsaCipher.encrypt(test, rsaCipher.e, rsaCipher.n);
+        System.out.println(String.format("Encrypted message: %f", test));
+        test = rsaCipher.decrypt(test, rsaCipher.d, rsaCipher.n);
+        System.out.println(String.format("Decrypted message: %f", test));
         break;
       case SHIFT:
         if (settings.shift == 0) {
@@ -29,9 +39,9 @@ public class Main {
           int max = 26; // exclusive
           settings.shift = random.nextInt(max - min) + min;
         }
-        String startingMessage = String.format("--- Starting %s ('Shift' algorithm, shift=%1d) ---", (settings.decrypt) ? "decryption" : "encryption", settings.shift);
-        System.out.println(startingMessage);
-        Shift cipher = new Shift(settings.shift);
+        launchInfo = String.format("--- Starting %s ('Shift' algorithm, shift=%1d) ---", (settings.decrypt) ? "decryption" : "encryption", settings.shift);
+        System.out.println(launchInfo);
+        Shift shiftCipher = new Shift(settings.shift);
         if (settings.inputFile != null && !settings.inputFile.isEmpty()) {
           msg = IOUtilities.readFromFile(settings.inputFile, true);
         } else {
@@ -40,10 +50,10 @@ public class Main {
         }
         System.out.println("Original message: " + msg);
         if (settings.decrypt) {
-          msg = cipher.decrypt(msg);
+          msg = shiftCipher.decrypt(msg);
           System.out.println("Decrypted message: " + msg);
         } else {
-          msg = cipher.encrypt(msg);
+          msg = shiftCipher.encrypt(msg);
           System.out.println("Encrypted message: " + msg);
         }
         if (settings.outputFile != null && !settings.outputFile.isEmpty()){
