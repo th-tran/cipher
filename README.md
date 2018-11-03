@@ -23,14 +23,15 @@ There are two options:
 2) Jar: java -jar jar/Main.jar
 
 ## Current features:
-- New project ;)
-
-## Planned features:
 - Encryption algorithms:
   - Shift (https://simple.wikipedia.org/wiki/Caesar_cipher)
   - RSA (https://simple.wikipedia.org/wiki/RSA_algorithm)
-  - AES (https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+- Enable encryption/decryption based on passed parameters (keys, files containing message, etc.)
+
+## Planned features:
+- Encryption algorithm(s):
+  - Hybrid -> RSA + AES (https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
 - Optional modes:
   - Strong encryption
   - Generate keys only
-- Enable encryption/decryption based on passed parameters (keys, files containing message, etc.)
+- Improve shift algorithm (remove shift overflow)
