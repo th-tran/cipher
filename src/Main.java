@@ -19,24 +19,41 @@ public class Main {
   }
     
   public void run(Settings settings) throws Exception { 
-    String message;
-    String launchInfo;
+    String message = "";
+    String launchInfo = "";
     switch (settings.algo) {
       case RSA:
         launchInfo = String.format("--- Starting %s ('RSA' algorithm) ---", (settings.decrypt) ? "decryption" : "encryption");
         System.out.println(launchInfo);
         RSA rsaCipher = new RSA();
 
-        System.out.println("Enter the plain text:");
-        message = IOUtilities.getUserInput();
+        byte[] messageAsBytes;
+        if (settings.inputFile != null && !settings.inputFile.isEmpty() && settings.decrypt) {
+          messageAsBytes = IOUtilities.readByteArrayFromFile(settings.inputFile, true);
+        } else if (settings.inputFile != null && !settings.inputFile.isEmpty() && !(settings.decrypt)) {
+          message = IOUtilities.readFromFile(settings.inputFile, true);
+          messageAsBytes = message.getBytes();
+        } else {
+          System.out.println("Enter the plain text:");
+          message = IOUtilities.getUserInput();
+          messageAsBytes = message.getBytes();
+        }
 
-        System.out.println(String.format("Encrypting string: %s", message));
-        byte[] encrypted = rsaCipher.encrypt(message.getBytes());
-        System.out.println("Encrypted message: " + encrypted.toString());
+        System.out.println(separator);
 
-        System.out.println("Decrypting string: " + encrypted.toString());
-        byte[] decrypted = rsaCipher.decrypt(encrypted);
-        System.out.println(String.format("Decrypted message: %s", new String(decrypted)));
+        if (settings.decrypt) {
+          System.out.println("Decrypting string: " + messageAsBytes.toString());
+          messageAsBytes = rsaCipher.decrypt(messageAsBytes);
+          System.out.println(String.format("Decrypted message: %s", new String(messageAsBytes)));
+        } else {
+          System.out.println(String.format("Encrypting string: %s", message));
+          messageAsBytes = rsaCipher.encrypt(messageAsBytes);
+          System.out.println("Encrypted message: " + messageAsBytes.toString());
+        }
+
+        if (settings.outputFile != null && !settings.outputFile.isEmpty()){
+          IOUtilities.writeByteArrayToFile(settings.outputFile, messageAsBytes, true);
+        }
         break;
       case SHIFT:
         launchInfo = String.format("--- Starting %s ('Shift' algorithm, shift=%1d) ---", (settings.decrypt) ? "decryption" : "encryption", settings.shift);
@@ -54,8 +71,9 @@ public class Main {
         } else {
           System.out.println("Enter the plain text:");
           message = IOUtilities.getUserInput();
-          System.out.println(separator);
         }
+
+        System.out.println(separator);
 
         if (settings.decrypt) {
           System.out.println("Decrypting string: " + message + endl);
