@@ -8,6 +8,9 @@ import java.util.Random;
 
 public class Main {
   
+  private String endl = System.getProperty("line.separator");
+  private String separator = endl + "----------------------------" + endl;
+
   public static void main(String[] argv) throws Exception {
     Settings settings = new Settings();
     // Most invalid/edge cases will be caught during parsing
@@ -51,14 +54,15 @@ public class Main {
         } else {
           System.out.println("Enter the plain text:");
           message = IOUtilities.getUserInput();
+          System.out.println(separator);
         }
 
         if (settings.decrypt) {
-          System.out.println("Decrypting string: " + message);
+          System.out.println("Decrypting string: " + message + endl);
           message = shiftCipher.decrypt(message);
           System.out.println("Decrypted message: " + message);
         } else {
-          System.out.println("Encrypting string: " + message);
+          System.out.println("Encrypting string: " + message + endl);
           message = shiftCipher.encrypt(message);
           System.out.println("Encrypted message: " + message);
         }
