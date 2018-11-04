@@ -6,9 +6,9 @@ import java.util.Random;
 
 public class RSA {
 
-  public BigInteger d, e, N, p, q, phi;
-  public Random r;
-  public int bitLength;
+  private BigInteger d, e, N, p, q, phi;
+  private Random r;
+  private int bitLength;
 
   public RSA() {
     // Two random unique prime numbers (p and q)
