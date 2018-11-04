@@ -29,9 +29,9 @@ public class Main {
 
         byte[] messageAsBytes;
         if (settings.inputFile != null && !settings.inputFile.isEmpty() && settings.decrypt) {
-          messageAsBytes = IOUtilities.readByteArrayFromFile(settings.inputFile, true);
+          messageAsBytes = IOUtilities.readByteArrayFromFile(settings.inputFile);
         } else if (settings.inputFile != null && !settings.inputFile.isEmpty() && !(settings.decrypt)) {
-          message = IOUtilities.readFromFile(settings.inputFile, true);
+          message = IOUtilities.readTextFromFile(settings.inputFile);
           messageAsBytes = message.getBytes();
         } else {
           System.out.println("Enter the plain text:");
@@ -52,8 +52,9 @@ public class Main {
         }
 
         if (settings.outputFile != null && !settings.outputFile.isEmpty()){
-          IOUtilities.writeByteArrayToFile(settings.outputFile, messageAsBytes, true);
+          IOUtilities.writeToFile(settings.outputFile, messageAsBytes);
         }
+
         break;
       case SHIFT:
         launchInfo = String.format("--- Starting %s ('Shift' algorithm, shift=%1d) ---", (settings.decrypt) ? "decryption" : "encryption", settings.shift);
@@ -67,7 +68,7 @@ public class Main {
         Shift shiftCipher = new Shift(settings.shift);
 
         if (settings.inputFile != null && !settings.inputFile.isEmpty()) {
-          message = IOUtilities.readFromFile(settings.inputFile, true);
+          message = IOUtilities.readTextFromFile(settings.inputFile);
         } else {
           System.out.println("Enter the plain text:");
           message = IOUtilities.getUserInput();
@@ -86,8 +87,9 @@ public class Main {
         }
 
         if (settings.outputFile != null && !settings.outputFile.isEmpty()){
-          IOUtilities.writeToFile(settings.outputFile, message, true);
+          IOUtilities.writeToFile(settings.outputFile, message);
         }
+
         break;
       default:
         // Should be handled by parser, but throw exception here anyways

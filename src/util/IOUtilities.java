@@ -29,11 +29,9 @@ public final class IOUtilities {
     return fileName;
   }
 
-  public static String readFromFile(String fileName, boolean verbose) throws IOException {
+  public static String readTextFromFile(String fileName) throws IOException {
     fileName = assertTxt(fileName);
-    if (verbose) {
-      System.out.println("Reading from file: " + fileName);
-    }
+    System.out.println("Reading from text file: " + fileName);
     File file = new File(System.getProperty("user.dir") + "/" + fileName);
     BufferedReader br = new BufferedReader(new FileReader(file));
     String fileContent = "";
@@ -48,11 +46,17 @@ public final class IOUtilities {
     return fileContent;
   }
 
-  public static boolean writeToFile(String fileName, String fileContent, boolean verbose) throws IOException {
+  public static byte[] readByteArrayFromFile(String fileName) throws IOException {
     fileName = assertTxt(fileName);
-    if (verbose) {
-      System.out.println("Writing to file: " + fileName);
-    }
+    System.out.println("Reading from text file: " + fileName);
+    File file = new File(System.getProperty("user.dir") + "/" + fileName);
+    byte[] fileContent = Files.readAllBytes(file.toPath());
+    return fileContent;
+  }
+
+  public static boolean writeToFile(String fileName, String fileContent) throws IOException {
+    fileName = assertTxt(fileName);
+    System.out.println("Writing to text file: " + fileName);
     File file = new File(System.getProperty("user.dir") + "/" + fileName);
     BufferedWriter bw = new BufferedWriter(new FileWriter(file));
     try {
@@ -63,21 +67,9 @@ public final class IOUtilities {
     return true;
   }
 
-  public static byte[] readByteArrayFromFile(String fileName, boolean verbose) throws IOException {
+  public static boolean writeToFile(String fileName, byte[] bytes) throws IOException {
     fileName = assertTxt(fileName);
-    if (verbose) {
-      System.out.println("Reading from file: " + fileName);
-    }
-    File file = new File(System.getProperty("user.dir") + "/" + fileName);
-    byte[] fileContent = Files.readAllBytes(file.toPath());
-    return fileContent;
-  }
-
-  public static boolean writeByteArrayToFile(String fileName, byte[] bytes, boolean verbose) throws IOException {
-    fileName = assertTxt(fileName);
-    if (verbose) {
-      System.out.println("Writing to file: " + fileName);
-    }
+    System.out.println("Writing to text file: " + fileName);
     File file = new File(System.getProperty("user.dir") + "/" + fileName);
     Files.write(file.toPath(), bytes);
     return true;
