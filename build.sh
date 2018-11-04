@@ -14,7 +14,7 @@ fi
 
 echo -e "\nCompiling class files..."
 mkdir -p classes
-javac -cp lib/* -d classes $(find -name "*.java") 
+javac -cp "*;lib/*" -d classes $(find -name "*.java")
 echo -e "...done.\n"
 echo -e "Building jar...\n"
 cd classes
