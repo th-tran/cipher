@@ -25,7 +25,15 @@ public class Main {
       case RSA:
         launchInfo = String.format("--- Starting %s ('RSA' algorithm) ---", (settings.decrypt) ? "decryption" : "encryption");
         System.out.println(launchInfo);
-        RSA rsaCipher = new RSA();
+        RSA rsaCipher;
+        if (!(settings.keyFile.isEmpty())) {
+          rsaCipher = IOUtilities.readRSAKey(settings.keyFile);
+          System.out.println(rsaCipher.getE());
+          System.out.println(rsaCipher.getD());
+          System.out.println(rsaCipher.getN());
+        } else {
+          rsaCipher = new RSA();
+        }
 
         byte[] messageAsBytes;
         if (settings.inputFile != null && !settings.inputFile.isEmpty() && settings.decrypt) {
@@ -42,13 +50,15 @@ public class Main {
         System.out.println(separator);
 
         if (settings.decrypt) {
-          System.out.println("Decrypting string: " + messageAsBytes.toString());
+          System.out.println("Decrypting bytes: " + messageAsBytes.toString());
           messageAsBytes = rsaCipher.decrypt(messageAsBytes);
           System.out.println(String.format("Decrypted message: %s", new String(messageAsBytes)));
         } else {
           System.out.println(String.format("Encrypting string: %s", message));
           messageAsBytes = rsaCipher.encrypt(messageAsBytes);
           System.out.println("Encrypted message: " + messageAsBytes.toString());
+          String keyName = String.format("%s.key", (!(settings.inputFile.isEmpty())) ? settings.inputFile : "last");
+          IOUtilities.writeKey(keyName, rsaCipher);
         }
 
         if (settings.outputFile != null && !settings.outputFile.isEmpty()){

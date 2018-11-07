@@ -41,6 +41,36 @@ public class RSA {
     System.out.println(String.format("Private: %d", d));
   }
 
+  public RSA(BigInteger e, BigInteger d, BigInteger N) {
+    this.e = e;
+    this.d = d;
+    this.N = N;
+  }
+
+  public String getE() {
+    return ((this.e).toString());
+  }
+
+  public void setE(BigInteger e) {
+    this.e = e;
+  }
+
+  public String getD() {
+    return ((this.d).toString());
+  }
+
+  public void setD(BigInteger d) {
+    this.d = d;
+  }
+
+  public String getN() {
+    return ((this.N).toString());
+  }
+
+  public void setN(BigInteger N) {
+    this.N = N;
+  }
+
   public byte[] encrypt(byte[] message) {
     // x = (message ^ e) % n
     return (new BigInteger(message)).modPow(e, N).toByteArray();
