@@ -6,9 +6,11 @@ To build the project, there are two options:
 1) Automatic: Run the build script by typing './build.sh'.
 
 2) Manual: Run the following commands:
-    1) javac -cp lib/* -d classes src/\*.java
-    2) cd classes
-    3) jar cvfe Main.jar Main \*.class algorithm/\*.class ../lib/\*.jar
+    ```
+    $ javac -cp lib/* -d classes src/\*.java
+    $ cd classes
+    $ jar cvfe Main.jar Main \*.class algorithm/\*.class ../lib/\*.jar
+    ```
 
 ## Running the program
 
@@ -16,11 +18,16 @@ There are two options:
 
 (Assuming you're in the project root directory)
 
-1) Class file: 
-    1) cd classes
-    2) java -cp ".;../lib/\*" Main
+1) Class file:
+    ```
+    $ cd classes
+    $ java -cp ".;../lib/\*" Main
+    ```
 
-2) Jar: java -jar jar/Main.jar
+2) Jar:
+   ```
+   $ java -jar jar/Main.jar
+   ```
 
 ## Current features:
 - Encryption algorithms:
